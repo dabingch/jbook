@@ -9,12 +9,19 @@ export const unpkgPathPlugin = () => {
         console.log('onResolve', args);
         if (args.path === 'index.js') {
           return { path: args.path, namespace: 'a' };
-        } else if (args.path === 'tiny-test-pkg') {
-          return {
-            namespace: 'a',
-            path: `https://unpkg.com/tiny-test-pkg@1.0.0/index.js`,
-          };
         }
+
+        return {
+          path: `https://unpkg.com/${args.path}`,
+          namespace: 'a',
+        };
+
+        // else if (args.path === 'tiny-test-pkg') {
+        //   return {
+        //     namespace: 'a',
+        //     path: `https://unpkg.com/tiny-test-pkg@1.0.0/index.js`,
+        //   };
+        // }
       });
 
       build.onLoad({ filter: /.*/ }, async (args: any) => {
